@@ -1,34 +1,15 @@
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
-html {
-  height: 100%;
-}
-
-html,
-body {
-  max-width: 100vw;
-  overflow-x: hidden;
-}
-
-body {
-  min-height: 100%;
-  display: flex;
-  flex-direction: column;
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  --bg: #eef1f6;
+  --surface: #ffffff;
+  --surface-muted: #f7f8fb;
+  --text: #1c2430;
+  --text-muted: #5b6778;
+  --line: #dce3ee;
+  --accent: #2f5bea;
+  --accent-hover: #2449c9;
+  --danger: #c43c3c;
+  --shadow: 0 8px 24px rgba(28, 36, 48, 0.06);
+  --radius: 14px;
 }
 
 * {
@@ -37,13 +18,227 @@ body {
   margin: 0;
 }
 
-a {
-  color: inherit;
-  text-decoration: none;
+html,
+body {
+  min-height: 100%;
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
+body {
+  color: var(--text);
+  background: var(--bg);
+  font-family: var(--font-geist-sans), "Segoe UI", sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+button,
+input,
+textarea {
+  font: inherit;
+}
+
+.board-shell {
+  min-height: 100vh;
+  padding: 28px 24px 40px;
+}
+
+.board-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.board-kicker {
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.board-title {
+  font-size: 2rem;
+  letter-spacing: -0.03em;
+  margin-top: 4px;
+}
+
+.board-subtitle {
+  color: var(--text-muted);
+  max-width: 280px;
+  line-height: 1.45;
+}
+
+.board {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(220px, 1fr));
+  gap: 16px;
+  align-items: start;
+}
+
+.column {
+  background: var(--surface-muted);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 14px;
+  min-height: 70vh;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.column-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.column-title,
+.column-title-input {
+  font-size: 0.95rem;
+  font-weight: 700;
+  background: transparent;
+  border: 0;
+  color: var(--text);
+  padding: 4px 6px;
+  border-radius: 8px;
+  text-align: left;
+  width: 100%;
+}
+
+.column-title {
+  cursor: text;
+}
+
+.column-title:hover,
+.column-title-input {
+  background: var(--surface);
+}
+
+.column-title-input {
+  outline: 2px solid var(--accent);
+}
+
+.column-count {
+  flex-shrink: 0;
+  min-width: 24px;
+  height: 24px;
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--text-muted);
+  font-size: 0.75rem;
+  font-weight: 600;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--line);
+}
+
+.column-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 1;
+  min-height: 80px;
+}
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 12px;
+  box-shadow: var(--shadow);
+  cursor: grab;
+}
+
+.card:active {
+  cursor: grabbing;
+}
+
+.card-title {
+  font-size: 0.95rem;
+  line-height: 1.35;
+  margin-bottom: 6px;
+}
+
+.card-details {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  line-height: 1.45;
+}
+
+.card-actions,
+.card-edit {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.card-edit {
+  flex-direction: column;
+}
+
+.card-action,
+.card-save,
+.add-card-button {
+  border: 0;
+  border-radius: 8px;
+  padding: 6px 10px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.card-action {
+  background: var(--surface-muted);
+  color: var(--text-muted);
+}
+
+.card-action.danger:hover,
+.card-action.danger:focus {
+  color: var(--danger);
+  background: #fdecec;
+}
+
+.card-save,
+.add-card-button {
+  background: var(--accent);
+  color: #fff;
+}
+
+.card-save:hover,
+.add-card-button:hover {
+  background: var(--accent-hover);
+}
+
+.card-title-input,
+.card-details-input,
+.add-card-title,
+.add-card-details {
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 8px 10px;
+  background: var(--surface);
+  color: var(--text);
+}
+
+.add-card-form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.add-card-details,
+.card-details-input {
+  resize: vertical;
+}
+
+.form-error {
+  color: var(--danger);
+  font-size: 0.78rem;
+}
+
+.add-card-button {
+  align-self: flex-start;
 }
